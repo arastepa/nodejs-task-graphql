@@ -2,12 +2,11 @@ import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLList,
-  GraphQLString,
 } from 'graphql';
 import { UUIDType } from './uuid.js';
 import { PostType } from './basic-types/postType.js';
 import { ProfileType } from './basic-types/profileType.js';
-import { MemberType } from './basic-types/memberType.js';
+import { MemberType, MemberTypeIdEnum } from './basic-types/memberType.js';
 import { UserType } from './basic-types/userType.js';
 import { PrismaClient } from '@prisma/client';
 
@@ -22,7 +21,7 @@ export const rootQueryType = new GraphQLObjectType({
     },
     memberType: {
       type: MemberType,
-      args: { id: { type: new GraphQLNonNull(GraphQLString) } },
+      args: { id: { type: new GraphQLNonNull(MemberTypeIdEnum) } },
       resolve: async (_parent, { id }: {id: string}, { prisma }: {prisma: PrismaClient}) => {
         return prisma.memberType.findUnique({ where: { id } });
       },
